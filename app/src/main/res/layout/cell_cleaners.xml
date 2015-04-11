@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <!-- user profile picture -->
+    <ImageView
+        android:id="@+id/cleaner_pic"
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
+
+    <!-- user info-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <!-- user name -->
+        <TextView
+            android:id="@+id/cleaner_name"
+            android:layout_width="130dp"
+            android:layout_height="20dp"
+            android:text="HEEYYYY"
+            android:textColor="#000000"
+            android:layout_weight="0.33" />
+
+        <!-- user gender -->
+        <ImageView
+            android:id="@+id/cleaner_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33" />
+
+        <!-- cleaner description -->
+
+
+
+    </LinearLayout>
+
+    <!-- -->
+
+
+</LinearLayout>
