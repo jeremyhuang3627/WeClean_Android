@@ -12,7 +12,7 @@
 
         <!-- Frame in the middle to be filled with separate activities -->
         <FrameLayout
-            android:id="@android:id/tabhost"
+            android:id="@android:id/tabcontent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">

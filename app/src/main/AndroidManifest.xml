@@ -16,6 +16,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CleanerDetail"
+            android:label="@string/title_activity_cleaner_detail"
+            android:parentActivityName=".TabCleaners" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="TabCleaners" />
+        </activity>
+        <activity
+            android:name=".TabAccount"
+            android:label="@string/title_activity_tab_account" >
+        </activity>
+        <activity
+            android:name=".TabCleaners"
+            android:label="@string/title_activity_tab_cleaners" >
+        </activity>
+        <activity
+            android:name=".TabMessages"
+            android:label="@string/title_activity_tab_messages" >
+        </activity>
     </application>
 
 </manifest>

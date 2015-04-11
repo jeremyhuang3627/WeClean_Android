@@ -33,12 +33,14 @@
             android:layout_weight="0.33" />
 
         <!-- cleaner description -->
-
-
+        <TextView
+            android:id="@+id/cleaner_description"
+            android:layout_width="130dp"
+            android:layout_height="20dp"
+            android:text="description"
+            android:layout_gravity="bottom"
+            android:layout_weight="0.33" />
 
     </LinearLayout>
-
-    <!-- -->
-
 
 </LinearLayout>

@@ -17,7 +17,7 @@ public class User {
         this.name = name;
         this.gender = gender;
         this.picid = picid;
-        this.description
+        this.description = description;
     }
 
     // getters

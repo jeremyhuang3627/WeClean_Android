@@ -1,7 +1,11 @@
 package app.nevvea.weclean;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -33,7 +37,21 @@ public class TabCleaners extends Activity {
         cleanerlist.add(new User("Anna", 0, R.drawable.pic_anna, "lallalalla"));
         cleanerlist.add(new User("Anna", 0, R.drawable.pic_anna, "lallalalla"));
 
+        // set adapter to list view of cleaners
+        ListAdapter adapter = new CleanerAdapter(this, cleanerlist);
+        listView.setAdapter(adapter);
 
+        // call cleaner detail activity when a cleaner is clicked
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CharSequence text = listView.getItemAtPosition(position).toString();
+
+                Intent intent = new Intent(getApplication(), CleanerDetail.class)
+                        .putExtra(Intent.EXTRA_TEXT, text);
+                startActivity(intent);
+            }
+        });
     }
 
 }

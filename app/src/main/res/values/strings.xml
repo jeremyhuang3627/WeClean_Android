@@ -3,4 +3,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_cleaner_detail">CleanerDetail</string>
+    <string name="title_activity_tab_account">TabAccount</string>
+    <string name="title_activity_tab_messages">TabMessages</string>
+    <string name="title_activity_tab_cleaners">Cleaners</string>
 </resources>
