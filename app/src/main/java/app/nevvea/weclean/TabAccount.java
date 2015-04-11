@@ -1,12 +1,17 @@
 package app.nevvea.weclean;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
+
+import com.facebook.FacebookSdk;
 
 
 public class TabAccount extends Activity {
@@ -14,10 +19,16 @@ public class TabAccount extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tab_widget);
+        setContentView(R.layout.activity_tab_account);
 
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear);
-        linearLayout.setBackgroundColor(Color.parseColor("#3982d7"));
+        Button button = (Button) findViewById(R.id.button_login);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

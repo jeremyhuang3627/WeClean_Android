@@ -7,4 +7,6 @@
     <string name="title_activity_tab_account">TabAccount</string>
     <string name="title_activity_tab_messages">TabMessages</string>
     <string name="title_activity_tab_cleaners">Cleaners</string>
+    <string name="facebook_app_id">969761796369221</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>
