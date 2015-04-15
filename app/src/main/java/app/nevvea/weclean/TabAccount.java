@@ -1,23 +1,64 @@
 package app.nevvea.weclean;
 
 import android.app.Activity;
-import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
+
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
 
 
-public class TabAccount extends Activity {
+public class TabAccount extends ActionBarActivity {
+
+    private static final int SPLASH = 0;
+    private static final int SELECTION = 1;
+    private static final int FRAGMENT_COUNT = 2;
+
+    private Fragment[] fragments = new Fragment[FRAGMENT_COUNT];
+
+    private boolean isResumed = false;
+    private boolean userSkippedLogin = false;
+    private AccessTokenTracker accessTokenTracker;
+    private CallbackManager callbackManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tab_widget);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        setContentView(R.layout.activity_tab_account);
 
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear);
-        linearLayout.setBackgroundColor(Color.parseColor("#3982d7"));
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken newAccessToken) {
+                if (isResumed) {
+                    FragmentManager manager = getSupportFragmentManager();
+                    int backStackSize = manager.getBackStackEntryCount();
+                    for (int i = 0; i < backStackSize; i++) {
+                        manager.popBackStack();
+                    }
+                    if (newAccessToken != null) {
+                        // showFragment(SELECTION, false);
+                    } else {
+                        //showFragment(SPLASH, false);
+                    }
+                }
+            }
+        };
+
+        FragmentManager fm = getSupportFragmentManager();
+//        LoginFragment loginFragment = (LoginFragment) fm.findFragmentById(R.id.loginFragment);
+
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.commit();
     }
 
 
