@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TabHost;
 
+import com.facebook.FacebookSdk;
+
 
 public class MainActivity extends ActionBarActivity {
     LocalActivityManager mLocalActivityManager;
@@ -17,7 +19,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        FacebookSdk.sdkInitialize(getApplicationContext());
         // Setup three tabs at the bottom of screen
         tabSetup(savedInstanceState);
 

@@ -38,6 +38,7 @@ public class LoginFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // inflate the fragment with layout
         View view = inflater.inflate(R.layout.login_fragment, container, false);
 
@@ -46,10 +47,13 @@ public class LoginFragment extends Fragment {
         loginButton = (LoginButton) view.findViewById(R.id.login_button);
         loginButton.setReadPermissions("user_friends");
         loginButton.setFragment(this);
+        Log.w("11111111", "111");
+
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Toast.makeText(getActivity(), "Login successful", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
             }
 
             @Override
@@ -62,7 +66,7 @@ public class LoginFragment extends Fragment {
                 Toast.makeText(getActivity(), "Login error", Toast.LENGTH_SHORT).show();
             }
         });
-
+        Log.w("22222222", "222");
         skipLoginButton = (TextView) view.findViewById(R.id.skip_login_button);
         skipLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,9 +81,16 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent, requestCode);
+        Log.w(Integer.toString(requestCode), "HERERERERERERERERERERERE");
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+        Log.w("33333333", "333");
     }
 
     public void setSkipLoginCallback(SkipLoginCallback callback) {

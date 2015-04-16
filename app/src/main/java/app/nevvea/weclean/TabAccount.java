@@ -1,6 +1,7 @@
 package app.nevvea.weclean;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -9,6 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -16,7 +19,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 
 
-public class TabAccount extends ActionBarActivity {
+public class TabAccount extends FragmentActivity {
 
     private static final int SPLASH = 0;
     private static final int SELECTION = 1;
@@ -33,32 +36,40 @@ public class TabAccount extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_tab_account);
 
-        accessTokenTracker = new AccessTokenTracker() {
+        Button button = (Button) findViewById(R.id.jumptologin_button);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken newAccessToken) {
-                if (isResumed) {
-                    FragmentManager manager = getSupportFragmentManager();
-                    int backStackSize = manager.getBackStackEntryCount();
-                    for (int i = 0; i < backStackSize; i++) {
-                        manager.popBackStack();
-                    }
-                    if (newAccessToken != null) {
-                        // showFragment(SELECTION, false);
-                    } else {
-                        //showFragment(SPLASH, false);
-                    }
-                }
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(), LoginActivity.class);
+                startActivity(intent);
             }
-        };
+        });
 
-        FragmentManager fm = getSupportFragmentManager();
+//        accessTokenTracker = new AccessTokenTracker() {
+//            @Override
+//            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken newAccessToken) {
+//                if (isResumed) {
+//                    FragmentManager manager = getSupportFragmentManager();
+//                    int backStackSize = manager.getBackStackEntryCount();
+//                    for (int i = 0; i < backStackSize; i++) {
+//                        manager.popBackStack();
+//                    }
+//                    if (newAccessToken != null) {
+//                        // showFragment(SELECTION, false);
+//                    } else {
+//                        //showFragment(SPLASH, false);
+//                    }
+//                }
+//            }
+//        };
+//
+//        FragmentManager fm = getSupportFragmentManager();
 //        LoginFragment loginFragment = (LoginFragment) fm.findFragmentById(R.id.loginFragment);
 
-        FragmentTransaction transaction = fm.beginTransaction();
-        transaction.commit();
+//        FragmentTransaction transaction = fm.beginTransaction();
+//        transaction.commit();
     }
 
 

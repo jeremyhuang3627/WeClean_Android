@@ -8,4 +8,5 @@
     <string name="title_activity_tab_messages">TabMessages</string>
     <string name="title_activity_tab_cleaners">Cleaners</string>
     <string name="facebook_app_id">969763766369024</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>
