@@ -66,7 +66,7 @@ public class LoginFragment extends Fragment {
                 Toast.makeText(getActivity(), "Login error", Toast.LENGTH_SHORT).show();
             }
         });
-        Log.w("22222222", "222");
+
         skipLoginButton = (TextView) view.findViewById(R.id.skip_login_button);
         skipLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,16 +81,9 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
-    public void startActivityForResult(Intent intent, int requestCode) {
-        super.startActivityForResult(intent, requestCode);
-        Log.w(Integer.toString(requestCode), "HERERERERERERERERERERERE");
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-        Log.w("33333333", "333");
     }
 
     public void setSkipLoginCallback(SkipLoginCallback callback) {

@@ -1,22 +1,21 @@
 package app.nevvea.weclean;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+
+import org.json.JSONObject;
 
 
 public class TabAccount extends FragmentActivity {
@@ -31,6 +30,7 @@ public class TabAccount extends FragmentActivity {
     private boolean userSkippedLogin = false;
     private AccessTokenTracker accessTokenTracker;
     private CallbackManager callbackManager;
+    private JSONObject user;
 
 
     @Override
@@ -47,29 +47,26 @@ public class TabAccount extends FragmentActivity {
             }
         });
 
-//        accessTokenTracker = new AccessTokenTracker() {
-//            @Override
-//            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken newAccessToken) {
-//                if (isResumed) {
-//                    FragmentManager manager = getSupportFragmentManager();
-//                    int backStackSize = manager.getBackStackEntryCount();
-//                    for (int i = 0; i < backStackSize; i++) {
-//                        manager.popBackStack();
-//                    }
-//                    if (newAccessToken != null) {
-//                        // showFragment(SELECTION, false);
-//                    } else {
-//                        //showFragment(SPLASH, false);
-//                    }
-//                }
-//            }
-//        };
-//
-//        FragmentManager fm = getSupportFragmentManager();
-//        LoginFragment loginFragment = (LoginFragment) fm.findFragmentById(R.id.loginFragment);
 
-//        FragmentTransaction transaction = fm.beginTransaction();
-//        transaction.commit();
+
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken,
+                                                       AccessToken currentAccessToken) {
+                fetchUserName();
+
+            }
+        };
+        callbackManager = CallbackManager.Factory.create();
+    }
+
+    private void fetchUserName() {
+        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        if (accessToken != null) {
+            Profile profile = Profile.getCurrentProfile();
+            TextView textView = (TextView) findViewById(R.id.textView);
+            textView.setText(profile.getFirstName());
+        } else user = null;
     }
 
 
