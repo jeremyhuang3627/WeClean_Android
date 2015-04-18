@@ -14,6 +14,8 @@ import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.Profile;
+import com.facebook.internal.ImageRequest;
+import com.facebook.internal.ImageResponse;
 
 import org.json.JSONObject;
 
@@ -37,37 +39,15 @@ public class TabAccount extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_account);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.account_fragment_container, new AccountFragment())
+                    .commit();
+        }
 
-        Button button = (Button) findViewById(R.id.jumptologin_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplication(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-
-        accessTokenTracker = new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken,
-                                                       AccessToken currentAccessToken) {
-                fetchUserName();
-
-            }
-        };
-        callbackManager = CallbackManager.Factory.create();
     }
 
-    private void fetchUserName() {
-        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        if (accessToken != null) {
-            Profile profile = Profile.getCurrentProfile();
-            TextView textView = (TextView) findViewById(R.id.textView);
-            textView.setText(profile.getFirstName());
-        } else user = null;
-    }
+
 
 
     @Override

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="picker_place_image_size">64dp</dimen>
+    <color name="picker_search_bar_background">#f5f5f7</color>
+    <color name="picker_search_bar_text">#bcbdc2</color>
+    <color name="scrumptious_main_orange">#FFFD5720</color>
+    <color name="disabled_button_color">#FFB7B7B7</color>
+    <color name="usersettings_fragment_connected_text_color">#FFFFFF</color>
+    <color name="usersettings_fragment_connected_shadow_color">#000000</color>
+    <color name="usersettings_fragment_not_connected_text_color">#A6AED7</color>
+</resources>

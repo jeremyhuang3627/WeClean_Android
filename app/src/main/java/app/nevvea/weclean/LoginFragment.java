@@ -17,6 +17,7 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import java.util.Arrays;
 import java.util.zip.Inflater;
 
 /**
@@ -45,15 +46,15 @@ public class LoginFragment extends Fragment {
         // set up callbackmanager, login button and cancel button
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) view.findViewById(R.id.login_button);
-        loginButton.setReadPermissions("user_friends");
+        loginButton.setReadPermissions(Arrays.asList("email"));
         loginButton.setFragment(this);
-        Log.w("11111111", "111");
+
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Toast.makeText(getActivity(), "Login successful", Toast.LENGTH_SHORT).show();
-                getActivity().finish();
+                getActivity().finish(); // after
             }
 
             @Override
