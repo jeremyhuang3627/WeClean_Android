@@ -3,10 +3,9 @@ package app.nevvea.weclean;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,25 +23,22 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
-import com.facebook.internal.ImageDownloader;
 import com.facebook.internal.ImageRequest;
 import com.facebook.internal.ImageResponse;
+import com.facebook.login.widget.ProfilePictureView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
  * Created by Anna on 4/17/15.
  */
 public class AccountFragment extends Fragment {
-
+    private Context context;
     private static final String NAME = "name";
     private static final String ID = "id";
     private static final String PICTURE = "picture";
@@ -58,7 +54,8 @@ public class AccountFragment extends Fragment {
 
     private Drawable userProfilePic;
     private TextView accountUserName, accountUserEmail;
-    private ImageView accountUserPic;
+    private ProfilePictureView profilePictureView;
+    private String accountUserId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,9 +71,10 @@ public class AccountFragment extends Fragment {
             }
         });
 
+        context = getActivity();
         accountUserName = (TextView) view.findViewById(R.id.account_user_name);
         accountUserEmail = (TextView) view.findViewById(R.id.account_user_email);
-        accountUserPic = (ImageView) view.findViewById(R.id.account_user_profilepic);
+        profilePictureView = (ProfilePictureView) view.findViewById(R.id.account_user_pic);
 
         accessTokenTracker = new AccessTokenTracker() {
             @Override
@@ -118,30 +116,12 @@ public class AccountFragment extends Fragment {
         if (user != null) {
             accountUserName.setText(user.optString("name"));
             accountUserEmail.setText(user.optString("email"));
+            accountUserId = user.optString("id");
 
-            ImageRequest request = getImageRequest();
-            if (request != null){
-                Uri imageUri = request.getImageUri();
-                try {
-                    InputStream inputStream = getActivity().getContentResolver().openInputStream(imageUri);
-                    userProfilePic = Drawable.createFromStream(inputStream, imageUri.toString() );
-                } catch (FileNotFoundException e) {
-                    userProfilePic = getResources().getDrawable(R.drawable.pic_anna);
-                }
-                accountUserPic.setImageDrawable(userProfilePic);
-            }
-
-
-
-
-
-
-        }
-
-        try {
-            Log.d("TAAAAAAAAAG", user.toString(4));
-        } catch (JSONException e) {
-            e.printStackTrace();
+            // TODO: might produce error here NEEDS REVISE
+            AccessToken accessToken = AccessToken.getCurrentAccessToken();
+            if (accessToken != null)
+                profilePictureView.setProfileId(accountUserId);
         }
     }
 

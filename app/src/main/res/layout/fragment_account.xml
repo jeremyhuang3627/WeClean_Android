@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:paddingLeft="10dp"
@@ -23,12 +24,16 @@
             android:layout_weight="1"
             />
 
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="right"
-            android:id="@+id/account_user_profilepic"
-            android:src="@drawable/pic_anna"/>
+        <com.facebook.login.widget.ProfilePictureView
+            android:id="@+id/account_user_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:gravity="end|center_vertical"
+            facebook:preset_size="small" />
 
     </TableRow>
 

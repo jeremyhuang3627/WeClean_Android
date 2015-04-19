@@ -10,16 +10,21 @@ import android.view.MenuItem;
 import android.widget.TabHost;
 
 import com.facebook.FacebookSdk;
+import com.firebase.client.Firebase;
 
 
 public class MainActivity extends ActionBarActivity {
+    private static final String FIREBASE_URL = "https://dormcatchat.firebaseio.com/";
     LocalActivityManager mLocalActivityManager;
+    Firebase myFirebaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FacebookSdk.sdkInitialize(getApplicationContext());
+        Firebase.setAndroidContext(this);
+        myFirebaseRef = new Firebase(FIREBASE_URL);
         // Setup three tabs at the bottom of screen
         tabSetup(savedInstanceState);
 
