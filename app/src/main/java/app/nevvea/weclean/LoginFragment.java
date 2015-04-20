@@ -1,6 +1,8 @@
 package app.nevvea.weclean;
 
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,14 +10,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 
 import java.util.Arrays;
 import java.util.zip.Inflater;
@@ -26,12 +33,15 @@ import java.util.zip.Inflater;
  * This class is the login fragment that pops out when the user need to login.
  */
 public class LoginFragment extends Fragment {
+    private static final String FIREBASE_URL = "https://dormcatchat.firebaseio.com/";
+    Firebase myFirebaseRef;
+    private AuthData mAuthData;
 
     private LoginButton loginButton;                             // the Facebook login button
     private TextView skipLoginButton;                            // the "Continue as guest" button
     private SkipLoginCallback skipLoginCallback;
     private CallbackManager callbackManager;
-
+    private Context context;
 
     public interface SkipLoginCallback {
         void onSkipLoginPressed();
@@ -39,9 +49,12 @@ public class LoginFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        myFirebaseRef = new Firebase(FIREBASE_URL);
 
         // inflate the fragment with layout
         View view = inflater.inflate(R.layout.login_fragment, container, false);
+
+        context = getActivity();
 
         // set up callbackmanager, login button and cancel button
         callbackManager = CallbackManager.Factory.create();
@@ -54,6 +67,22 @@ public class LoginFragment extends Fragment {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Toast.makeText(getActivity(), "Login successful", Toast.LENGTH_SHORT).show();
+
+
+                // firebase thing
+                myFirebaseRef.authWithOAuthToken("facebook", AccessToken.getCurrentAccessToken().getToken(), new Firebase.AuthResultHandler() {
+                    @Override
+                    public void onAuthenticated(AuthData authData) {
+                        setAuthenticatedUser(authData);
+                    }
+
+                    @Override
+                    public void onAuthenticationError(FirebaseError firebaseError) {
+                        Log.d("LogERRRRRRR", firebaseError.toString());
+ //                       showErrorDialog(firebaseError.toString());
+                    }
+                });
+
                 getActivity().finish(); // after
             }
 
@@ -68,6 +97,9 @@ public class LoginFragment extends Fragment {
             }
         });
 
+
+
+
         skipLoginButton = (TextView) view.findViewById(R.id.skip_login_button);
         skipLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +111,16 @@ public class LoginFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void setAuthenticatedUser(AuthData authData) {
+        if (authData != null) {
+
+            String name = null;
+            name = (String) authData.getProviderData().get("displayName");
+
+        }
+        this.mAuthData = authData;
     }
 
     @Override

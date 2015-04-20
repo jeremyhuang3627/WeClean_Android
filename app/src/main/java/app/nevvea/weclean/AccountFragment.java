@@ -122,6 +122,9 @@ public class AccountFragment extends Fragment {
             AccessToken accessToken = AccessToken.getCurrentAccessToken();
             if (accessToken != null)
                 profilePictureView.setProfileId(accountUserId);
+
+            Log.d("UserID", accountUserId);
+            Log.d("AccessToken", accessToken.getToken());
         }
     }
 
