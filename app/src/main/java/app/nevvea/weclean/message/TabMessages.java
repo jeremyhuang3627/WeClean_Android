@@ -2,6 +2,7 @@ package app.nevvea.weclean.message;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.firebase.client.FirebaseError;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import app.nevvea.weclean.R;
 
@@ -30,8 +32,8 @@ public class TabMessages extends Activity {
     private Firebase mainRef = new Firebase("https://dormcatchat.firebaseio.com/");
     private Firebase messageListRef = mainRef.child("chats_list");
     private String firebaseUID;
-    private ArrayList<DataSnapshot> messageUIDList = new ArrayList<>();
     private Context context;
+    MessageListAdapter mMessageListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,8 @@ public class TabMessages extends Activity {
             @Override
             public void onAuthStateChanged(AuthData authData) {
                 if (authData != null) {
-                    getMessageList();
+                   // getMessageList();
+                    messageListSetup();
 
                 } else
                     Log.d("HEYYYYYYYYYYYY", "HEYYYYYYYYY");
@@ -55,55 +58,24 @@ public class TabMessages extends Activity {
         mainRef.addAuthStateListener(authStateListener);
     }
 
-    private void getMessageList() {
+    private void messageListSetup() {
         mAuthData = mainRef.getAuth();
         if (mAuthData != null) {
             firebaseUID = mAuthData.getUid();
             messageListRef = messageListRef.child(firebaseUID);
-
-            // for debug
-            ChildEventListener childEventListener = messageListRef.addChildEventListener(new ChildEventListener() {
+            final ListView messageListView = (ListView) findViewById(R.id.messages_list);
+            mMessageListAdapter = new MessageListAdapter(messageListRef, R.layout.cell_chat_list, this);
+            messageListView.setAdapter(mMessageListAdapter);
+            mMessageListAdapter.registerDataSetObserver(new DataSetObserver() {
                 @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                    if (messageUIDList.add(dataSnapshot)){
-                        Log.d("size", Integer.toString(messageUIDList.size()));
-                    }
-
-                    Log.d("debugbugbugbugbug", dataSnapshot.getKey().toString());
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(FirebaseError firebaseError) {
-
+                public void onChanged() {
+                    super.onChanged();
+                    messageListView.setSelection(mMessageListAdapter.getCount() - 1);
                 }
             });
-
-            messageListRef.addChildEventListener(childEventListener);
-
-
-            Log.d("lallalallallalallalla", mAuthData.getUid());
-        } else
-            Log.d("ERRRRRRRRRRR", "dontknowwhy");
+        }
 
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

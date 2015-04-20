@@ -1,6 +1,8 @@
 package app.nevvea.weclean.message;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Message;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,61 +15,42 @@ import com.facebook.GraphRequest;
 import com.facebook.Profile;
 import com.facebook.login.widget.ProfilePictureView;
 import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.Query;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import app.nevvea.weclean.FirebaseListAdapter;
 import app.nevvea.weclean.R;
 
 /**
  * Created by Anna on 4/19/15.
  */
-public class MessageListAdapter extends BaseAdapter {
+public class MessageListAdapter extends FirebaseListAdapter<MessageList> {
     private Context context;
-    private ArrayList<DataSnapshot> messageUIDList;
     private ProfilePictureView otherUserProfilePic;
     private TextView otherUserName;
     private TextView lastMessageTime;
     private TextView lastMessage;
+    private String facebookID;
 
-    // constructor
-    public MessageListAdapter(Context context, ArrayList<DataSnapshot> UIDList) {
-        this.context = context;
-        this.messageUIDList = UIDList;
+
+    public MessageListAdapter(Query ref, int layout, Activity activity){
+        super(ref, MessageList.class, layout, activity);
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View cellView;
+    protected void populateView(View view, MessageList messageList) {
+        otherUserName = (TextView) view.findViewById(R.id.chatcell_user_name);
+        lastMessage = (TextView) view.findViewById(R.id.chatcell_last_message);
+        lastMessageTime = (TextView) view.findViewById(R.id.chatcell_last_time);
+        otherUserProfilePic = (ProfilePictureView) view.findViewById(R.id.chatcell_user_pic);
 
-        // these four lines look suspiciously useless
-        if (convertView == null)
-            cellView = new View(context);
-        else
-            cellView = convertView;
-
-        // inflate cellView with layout
-        cellView = inflater.inflate(R.layout.cell_chat_list, null);
-
-        DataSnapshot otherUserSnapshot = messageUIDList.get(position);
-
-
-        String facebookID = otherUserSnapshot.child("name").getValue().toString();
-        Log.d("facebookNAME!!!!", facebookID);
-
-
-        return cellView;
+        otherUserName.setText(messageList.getName());
+        lastMessage.setText(messageList.getMessage());
+        lastMessageTime.setText(messageList.getDate());
+        otherUserProfilePic.setProfileId(messageList.getUid());
     }
-
-    @Override
-    public int getCount() { return messageUIDList.size(); }
-
-    @Override
-    public Object getItem(int position) {
-        return messageUIDList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) { return 0; }
 }
