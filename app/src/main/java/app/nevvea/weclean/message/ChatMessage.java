@@ -1,4 +1,4 @@
-package app.nevvea.weclean;
+package app.nevvea.weclean.message;
 
 /**
  * Created by Anna on 4/19/15.

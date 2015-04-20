@@ -1,4 +1,4 @@
-package app.nevvea.weclean;
+package app.nevvea.weclean.account;
 
 
 import android.app.AlertDialog;
@@ -26,6 +26,8 @@ import com.firebase.client.FirebaseError;
 
 import java.util.Arrays;
 import java.util.zip.Inflater;
+
+import app.nevvea.weclean.R;
 
 /**
  * Created by Anna on 4/14/15.

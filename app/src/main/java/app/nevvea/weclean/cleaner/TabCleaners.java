@@ -1,4 +1,4 @@
-package app.nevvea.weclean;
+package app.nevvea.weclean.cleaner;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,11 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import app.nevvea.weclean.R;
+import app.nevvea.weclean.User;
+import app.nevvea.weclean.cleaner.CleanerAdapter;
+import app.nevvea.weclean.cleaner.CleanerDetail;
 
 /**
  * Created by anna on 4/10/15.

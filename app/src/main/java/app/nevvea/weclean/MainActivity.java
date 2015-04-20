@@ -1,16 +1,19 @@
 package app.nevvea.weclean;
 
-import android.app.ActionBar;
 import android.app.LocalActivityManager;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TabHost;
 
 import com.facebook.FacebookSdk;
 import com.firebase.client.Firebase;
+
+import app.nevvea.weclean.account.TabAccount;
+import app.nevvea.weclean.cleaner.TabCleaners;
+import app.nevvea.weclean.message.TabMessages;
 
 
 public class MainActivity extends ActionBarActivity {

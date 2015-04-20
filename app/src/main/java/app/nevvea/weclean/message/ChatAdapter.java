@@ -1,4 +1,4 @@
-package app.nevvea.weclean;
+package app.nevvea.weclean.message;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.firebase.client.Query;
+
+import app.nevvea.weclean.FirebaseListAdapter;
+import app.nevvea.weclean.R;
 
 /**
  * Created by Anna on 4/18/15.

@@ -1,13 +1,17 @@
-package app.nevvea.weclean;
+package app.nevvea.weclean.message;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Adapter;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
@@ -16,20 +20,25 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import app.nevvea.weclean.R;
 
 
 public class TabMessages extends Activity {
     private AuthData mAuthData;
     private Firebase mainRef = new Firebase("https://dormcatchat.firebaseio.com/");
-    private Firebase messageListRef = new Firebase("https://dormcatchat.firebaseio.com/chats");
+    private Firebase messageListRef = mainRef.child("chats_list");
     private String firebaseUID;
-    private ArrayList<String> messageUIDList = new ArrayList<>();
+    private ArrayList<DataSnapshot> messageUIDList = new ArrayList<>();
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_messages);
 
+        context = this;
         mAuthData = null;
         Firebase.AuthStateListener authStateListener = new Firebase.AuthStateListener() {
 
@@ -37,7 +46,7 @@ public class TabMessages extends Activity {
             public void onAuthStateChanged(AuthData authData) {
                 if (authData != null) {
                     getMessageList();
-                    Log.d("HEYYYYYYYYYYYY", "HEYYYYYYYYY3114324");
+
                 } else
                     Log.d("HEYYYYYYYYYYYY", "HEYYYYYYYYY");
 
@@ -56,10 +65,12 @@ public class TabMessages extends Activity {
             ChildEventListener childEventListener = messageListRef.addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    messageUIDList.add(dataSnapshot.getKey().replaceAll("\\D+", ""));
 
-                    String UID = dataSnapshot.getKey().replaceAll("\\D+", "");
-                    Log.d("debugbugbugbugbug", UID);
+                    if (messageUIDList.add(dataSnapshot)){
+                        Log.d("size", Integer.toString(messageUIDList.size()));
+                    }
+
+                    Log.d("debugbugbugbugbug", dataSnapshot.getKey().toString());
                 }
 
                 @Override
@@ -89,7 +100,9 @@ public class TabMessages extends Activity {
             Log.d("lallalallallalallalla", mAuthData.getUid());
         } else
             Log.d("ERRRRRRRRRRR", "dontknowwhy");
+
     }
+
 
 
     @Override

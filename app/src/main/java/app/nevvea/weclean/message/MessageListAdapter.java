@@ -1,6 +1,8 @@
-package app.nevvea.weclean;
+package app.nevvea.weclean.message;
 
 import android.content.Context;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,22 +12,25 @@ import android.widget.TextView;
 import com.facebook.GraphRequest;
 import com.facebook.Profile;
 import com.facebook.login.widget.ProfilePictureView;
+import com.firebase.client.DataSnapshot;
 
 import java.util.ArrayList;
+
+import app.nevvea.weclean.R;
 
 /**
  * Created by Anna on 4/19/15.
  */
 public class MessageListAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<String> messageUIDList;
+    private ArrayList<DataSnapshot> messageUIDList;
     private ProfilePictureView otherUserProfilePic;
     private TextView otherUserName;
     private TextView lastMessageTime;
     private TextView lastMessage;
 
     // constructor
-    public MessageListAdapter(Context context, ArrayList<String> UIDList) {
+    public MessageListAdapter(Context context, ArrayList<DataSnapshot> UIDList) {
         this.context = context;
         this.messageUIDList = UIDList;
     }
@@ -45,9 +50,11 @@ public class MessageListAdapter extends BaseAdapter {
         // inflate cellView with layout
         cellView = inflater.inflate(R.layout.cell_chat_list, null);
 
-        String facebookID = messageUIDList.get(position);
+        DataSnapshot otherUserSnapshot = messageUIDList.get(position);
 
-        // GraphRequest graphRequest = new GraphRequest()
+
+        String facebookID = otherUserSnapshot.child("name").getValue().toString();
+        Log.d("facebookNAME!!!!", facebookID);
 
 
         return cellView;

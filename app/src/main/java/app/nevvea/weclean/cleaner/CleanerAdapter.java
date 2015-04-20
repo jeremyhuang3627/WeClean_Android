@@ -1,4 +1,4 @@
-package app.nevvea.weclean;
+package app.nevvea.weclean.cleaner;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+
+import app.nevvea.weclean.R;
+import app.nevvea.weclean.User;
 
 /**
  * Created by anna on 4/10/15.

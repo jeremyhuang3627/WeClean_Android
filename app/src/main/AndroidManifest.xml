@@ -19,23 +19,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CleanerDetail"
+            android:name=".cleaner.CleanerDetail"
             android:label="@string/title_activity_cleaner_detail"
-            android:parentActivityName=".TabCleaners" >
+            android:parentActivityName=".cleaner.TabCleaners" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="TabCleaners" />
+                android:value=".cleaner.TabCleaners" />
         </activity>
         <activity
-            android:name=".TabAccount"
+            android:name=".account.TabAccount"
             android:label="@string/title_activity_tab_account" >
         </activity>
         <activity
-            android:name=".TabCleaners"
+            android:name=".cleaner.TabCleaners"
             android:label="@string/title_activity_tab_cleaners" >
         </activity>
         <activity
-            android:name=".TabMessages"
+            android:name=".message.TabMessages"
             android:label="@string/title_activity_tab_messages" >
         </activity>
         <activity
@@ -49,12 +49,12 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".account.LoginActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName=".TabAccount" >
+            android:parentActivityName=".account.TabAccount" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="TabAccount" />
+                android:value=".account.TabAccount" />
         </activity>
     </application>
 
