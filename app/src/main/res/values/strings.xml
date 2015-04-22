@@ -10,4 +10,8 @@
     <string name="facebook_app_id">872396199479855</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_chat">ChatActivity</string>
+
+
+    <!-- firebase references -->
+    <string name="firebase_main_ref">https://dormcatchat.firebaseio.com/</string>
 </resources>

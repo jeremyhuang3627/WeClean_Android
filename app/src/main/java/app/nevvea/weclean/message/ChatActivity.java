@@ -14,12 +14,20 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Objects;
 
 import app.nevvea.weclean.R;
 
@@ -47,18 +55,17 @@ public class ChatActivity extends ActionBarActivity {
         otherUserChatsRef = chatsRef.child(otherUserUID).child(currentUserUID);
 
         final ListView listView = (ListView) findViewById(R.id.chat_message_listView);
-        // final ChatAdapter chatAdapter = new ChatAdapter(userChatsRef.limit(50), R.layout.chat_message, this, currentUserUID, otherUserUID);
-        // listView.setAdapter(chatAdapter);
-//        chatAdapter.registerDataSetObserver(new DataSetObserver() {
-//            @Override
-//            public void onChanged() {
-//                super.onChanged();
-//                listView.setSelection(chatAdapter.getCount() - 1);
-//            }
-//        });
-//
-//
+        final CustomFirebaseListAdapter adapter = new CustomFirebaseListAdapter(userChatsRef.limit(20), R.layout.chat_message, this, currentUserUID, otherUserUID);
 
+        listView.setAdapter(adapter);
+
+        adapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                listView.setSelection(adapter.getCount() - 1);
+            }
+        });
 
         // Setup our input methods. Enter key on the keyboard or pushing the send button
         EditText inputText = (EditText) findViewById(R.id.chat_message_input);

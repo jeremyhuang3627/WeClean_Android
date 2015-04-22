@@ -59,10 +59,10 @@
         <activity
             android:name=".message.ChatActivity"
             android:label="@string/title_activity_chat"
-            android:parentActivityName=".TabMessages" >
+            android:parentActivityName=".message.TabMessages" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="TabMessages" />
+                android:value=".message.TabMessages" />
         </activity>
     </application>
 
