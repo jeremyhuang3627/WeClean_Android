@@ -2,6 +2,7 @@ package app.nevvea.weclean.message;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
@@ -9,7 +10,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -28,6 +31,9 @@ import app.nevvea.weclean.R;
 
 
 public class TabMessages extends Activity {
+    public final static String currentUserUID = "Replace By currentUID";
+    public final static String otherUserUID = "Replace By otherUID";
+
     private AuthData mAuthData;
     private Firebase mainRef = new Firebase("https://dormcatchat.firebaseio.com/");
     private Firebase messageListRef = mainRef.child("chats_list");
@@ -43,13 +49,10 @@ public class TabMessages extends Activity {
         context = this;
         mAuthData = null;
         Firebase.AuthStateListener authStateListener = new Firebase.AuthStateListener() {
-
             @Override
             public void onAuthStateChanged(AuthData authData) {
                 if (authData != null) {
-                   // getMessageList();
                     messageListSetup();
-
                 } else
                     Log.d("HEYYYYYYYYYYYY", "HEYYYYYYYYY");
 
@@ -62,6 +65,7 @@ public class TabMessages extends Activity {
         mAuthData = mainRef.getAuth();
         if (mAuthData != null) {
             firebaseUID = mAuthData.getUid();
+            Log.d("firebase uid", firebaseUID);
             messageListRef = messageListRef.child(firebaseUID);
             final ListView messageListView = (ListView) findViewById(R.id.messages_list);
             mMessageListAdapter = new MessageListAdapter(messageListRef, R.layout.cell_chat_list, this);
@@ -71,6 +75,20 @@ public class TabMessages extends Activity {
                 public void onChanged() {
                     super.onChanged();
                     messageListView.setSelection(mMessageListAdapter.getCount() - 1);
+                }
+            });
+
+
+            messageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(context, ChatActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putString(currentUserUID, firebaseUID);
+                    MessageList messageList = (MessageList) mMessageListAdapter.getItem(position);
+                    extras.putString(otherUserUID, messageList.getUid());
+                    intent.putExtras(extras);
+                    startActivity(intent);
                 }
             });
         }

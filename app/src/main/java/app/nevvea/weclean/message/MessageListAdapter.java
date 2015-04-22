@@ -34,8 +34,6 @@ public class MessageListAdapter extends FirebaseListAdapter<MessageList> {
     private TextView otherUserName;
     private TextView lastMessageTime;
     private TextView lastMessage;
-    private String facebookID;
-
 
     public MessageListAdapter(Query ref, int layout, Activity activity){
         super(ref, MessageList.class, layout, activity);
@@ -51,6 +49,6 @@ public class MessageListAdapter extends FirebaseListAdapter<MessageList> {
         otherUserName.setText(messageList.getName());
         lastMessage.setText(messageList.getMessage());
         lastMessageTime.setText(messageList.getDate());
-        otherUserProfilePic.setProfileId(messageList.getUid());
+        otherUserProfilePic.setProfileId(messageList.getUid().replaceAll("\\D+", ""));
     }
 }

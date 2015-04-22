@@ -1,21 +1,21 @@
 package app.nevvea.weclean.message;
 
 /**
- * Created by Anna on 4/19/15.
+ * Created by Anna on 4/21/15.
  */
-public class ChatMessage {
+public class ChatImageMessage {
     private String date;
     private String from;
-    private String message;
+    private String image;
     private String status;
 
-    private ChatMessage() {
+    private ChatImageMessage() {
     }
 
-    ChatMessage(String date, String from, String message, String status) {
+    ChatImageMessage(String date, String from, String image, String status) {
         this.date = date;
         this.from = from;
-        this.message = message;
+        this.image = image;
     }
 
 
@@ -25,10 +25,11 @@ public class ChatMessage {
     public String getFrom() {
         return from;
     }
-    public String getMessage() {
-        return message;
+    public String getImage() {
+        return image;
     }
     public String getStatus() {
         return status;
     }
+
 }

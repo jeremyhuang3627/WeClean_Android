@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
+import com.facebook.login.widget.ProfilePictureView;
 import com.firebase.client.Query;
 
 import app.nevvea.weclean.FirebaseListAdapter;
@@ -14,12 +15,13 @@ import app.nevvea.weclean.R;
  * Created by Anna on 4/18/15.
  */
 public class ChatAdapter extends FirebaseListAdapter<ChatMessage> {
+    private String currentUserID;
+    private String otherUserID;
 
-    private String mUsername;
-
-    public ChatAdapter(Query ref, Activity activity, int layout, String mUsername) {
+    public ChatAdapter(Query ref, int layout, Activity activity, String currentUserID, String otherUserID) {
         super(ref, ChatMessage.class, layout, activity);
-        this.mUsername = mUsername;
+        this.currentUserID = currentUserID;
+        this.otherUserID = otherUserID;
     }
 
     /**
@@ -33,15 +35,17 @@ public class ChatAdapter extends FirebaseListAdapter<ChatMessage> {
     @Override
     protected void populateView(View view, ChatMessage chat) {
         // Map a Chat object to an entry in our listview
-        String author = chat.getAuthor();
-        TextView authorText = (TextView) view.findViewById(R.id.chat_author);
-        authorText.setText(author + ": ");
-        // If the message was sent by this user, color it differently
-        if (author != null && author.equals(mUsername)) {
-            authorText.setTextColor(Color.RED);
+        String from = chat.getFrom();
+        String message = chat.getMessage();
+
+        ProfilePictureView profilePictureView = (ProfilePictureView) view.findViewById(R.id.chat_message_user_pic);
+        if (from.equals("me")){
+            profilePictureView.setProfileId(currentUserID);
         } else {
-            authorText.setTextColor(Color.BLUE);
+            profilePictureView.setProfileId(otherUserID);
         }
-        ((TextView) view.findViewById(R.id.chat_message)).setText(chat.getMessage());
+
+        TextView currentMessage = (TextView) view.findViewById(R.id.chat_message);
+        currentMessage.setText(message);
     }
 }

@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.FirebaseException;
 import com.firebase.client.Query;
 
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
 
                 T model = dataSnapshot.getValue(FirebaseListAdapter.this.mModelClass);
+
                 mModelKeys.put(dataSnapshot.getKey(), model);
 
                 // Insert into the correct location, based on previousChildName
@@ -135,8 +137,8 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
                 Log.e("FirebaseListAdapter", "Listen was cancelled, no more updates will occur");
             }
 
-        });
-    }
+        });}
+
 
     public void cleanup() {
         // We're being destroyed, let go of our mListener and forget about all of the mModels

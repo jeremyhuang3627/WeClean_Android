@@ -56,6 +56,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".account.TabAccount" />
         </activity>
+        <activity
+            android:name=".message.ChatActivity"
+            android:label="@string/title_activity_chat"
+            android:parentActivityName=".TabMessages" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="TabMessages" />
+        </activity>
     </application>
 
 </manifest>

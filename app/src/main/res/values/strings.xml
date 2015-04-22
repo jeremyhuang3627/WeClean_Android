@@ -9,4 +9,5 @@
     <string name="title_activity_tab_cleaners">Cleaners</string>
     <string name="facebook_app_id">872396199479855</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_chat">ChatActivity</string>
 </resources>
