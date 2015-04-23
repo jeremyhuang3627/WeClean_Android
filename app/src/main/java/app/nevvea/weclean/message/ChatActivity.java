@@ -35,8 +35,11 @@ public class ChatActivity extends ActionBarActivity {
     private String currentUserUID;
     private String otherUserUID;
     private Firebase chatsRef = new Firebase("https://dormcatchat.firebaseio.com/chats");
+    private Firebase chatsListRef = new Firebase("https://dormcatchat.firebaseio.com/chats_list");
     private Firebase userChatsRef;
     private Firebase otherUserChatsRef;
+    private Firebase userChatListRef;
+    private Firebase otherUserChatListRef;
     private Firebase currentMessageRef;
     private Firebase otherUserMessageRef;
     private Bundle extras;
@@ -53,6 +56,8 @@ public class ChatActivity extends ActionBarActivity {
         otherUserUID = extras.getString(TabMessages.otherUserUID);
         userChatsRef = chatsRef.child(currentUserUID).child(otherUserUID);
         otherUserChatsRef = chatsRef.child(otherUserUID).child(currentUserUID);
+        userChatListRef = chatsListRef.child(currentUserUID).child(otherUserUID);
+        otherUserChatListRef = chatsListRef.child(otherUserUID).child(currentUserUID);
 
         final ListView listView = (ListView) findViewById(R.id.chat_message_listView);
         final CustomFirebaseListAdapter adapter = new CustomFirebaseListAdapter(userChatsRef.limit(20), R.layout.chat_message, this, currentUserUID, otherUserUID);
@@ -108,6 +113,15 @@ public class ChatActivity extends ActionBarActivity {
 
             currentMessageRef.setValue(chatMessage);
             otherUserMessageRef.setValue(otherUserChatMessage);
+
+            HashMap<String, Object> currentMap = new HashMap<>();
+            currentMap.put("date", dateString);
+            currentMap.put("message", input);
+
+            userChatListRef.updateChildren(currentMap);
+
+            currentMap.put("status", "unread");
+            otherUserChatListRef.updateChildren(currentMap);
 
             inputText.setText("");
         }

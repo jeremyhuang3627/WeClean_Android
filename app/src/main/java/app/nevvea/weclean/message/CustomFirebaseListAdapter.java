@@ -1,11 +1,13 @@
 package app.nevvea.weclean.message;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.login.widget.ProfilePictureView;
@@ -171,15 +173,20 @@ public class CustomFirebaseListAdapter extends BaseAdapter{
             message = model.get("image");
         }
 
+        Log.d("id check", currentUserID);
         ProfilePictureView profilePictureView = (ProfilePictureView) view.findViewById(R.id.chat_message_user_pic);
-        if (from.equals("me")){
-            profilePictureView.setProfileId(currentUserID);
-        } else {
-            profilePictureView.setProfileId(otherUserID);
-        }
-
         TextView currentMessage = (TextView) view.findViewById(R.id.chat_message);
         currentMessage.setText(message);
+
+
+        if (from.equals("me")){
+            profilePictureView.setProfileId(currentUserID.replaceAll("\\D+", ""));
+
+        } else {
+            profilePictureView.setProfileId(otherUserID.replaceAll("\\D+", ""));
+        }
+
+
 
     }
 }
