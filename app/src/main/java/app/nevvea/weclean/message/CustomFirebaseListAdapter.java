@@ -1,6 +1,5 @@
 package app.nevvea.weclean.message;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -173,17 +172,30 @@ public class CustomFirebaseListAdapter extends BaseAdapter{
             message = model.get("image");
         }
 
+
         Log.d("id check", currentUserID);
         ProfilePictureView profilePictureView = (ProfilePictureView) view.findViewById(R.id.chat_message_user_pic);
         TextView currentMessage = (TextView) view.findViewById(R.id.chat_message);
         currentMessage.setText(message);
 
+        RelativeLayout.LayoutParams piclayoutParams =
+                (RelativeLayout.LayoutParams) profilePictureView.getLayoutParams();
+        RelativeLayout.LayoutParams textlayoutParams =
+                (RelativeLayout.LayoutParams) currentMessage.getLayoutParams();
 
         if (from.equals("me")){
             profilePictureView.setProfileId(currentUserID.replaceAll("\\D+", ""));
+            piclayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, 0);
+            piclayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            profilePictureView.setLayoutParams(piclayoutParams);
 
+            textlayoutParams.addRule(RelativeLayout.RIGHT_OF, 0);
+            textlayoutParams.addRule(RelativeLayout.LEFT_OF, R.id.chat_message_user_pic);
+            
+            currentMessage.setLayoutParams(textlayoutParams);
         } else {
             profilePictureView.setProfileId(otherUserID.replaceAll("\\D+", ""));
+
         }
 
 

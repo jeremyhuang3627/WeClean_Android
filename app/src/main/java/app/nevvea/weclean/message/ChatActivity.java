@@ -14,20 +14,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Objects;
 
 import app.nevvea.weclean.R;
 
@@ -60,7 +52,7 @@ public class ChatActivity extends ActionBarActivity {
         otherUserChatListRef = chatsListRef.child(otherUserUID).child(currentUserUID);
 
         final ListView listView = (ListView) findViewById(R.id.chat_message_listView);
-        final CustomFirebaseListAdapter adapter = new CustomFirebaseListAdapter(userChatsRef.limit(20), R.layout.chat_message, this, currentUserUID, otherUserUID);
+        final CustomFirebaseListAdapter adapter = new CustomFirebaseListAdapter(userChatsRef.limit(20), R.layout.chat_message_other, this, currentUserUID, otherUserUID);
 
         listView.setAdapter(adapter);
 
