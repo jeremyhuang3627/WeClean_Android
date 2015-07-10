@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/listFooter"
         android:layout_alignParentTop="true"
+        android:divider="@color/transparent"
         android:transcriptMode="alwaysScroll"/>
 
     <LinearLayout

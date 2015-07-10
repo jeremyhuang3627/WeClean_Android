@@ -26,6 +26,7 @@ import app.nevvea.weclean.R;
 public class ChatActivity extends ActionBarActivity {
     private String currentUserUID;
     private String otherUserUID;
+    private String otherUserName;
     private Firebase chatsRef = new Firebase("https://dormcatchat.firebaseio.com/chats");
     private Firebase chatsListRef = new Firebase("https://dormcatchat.firebaseio.com/chats_list");
     private Firebase userChatsRef;
@@ -46,13 +47,15 @@ public class ChatActivity extends ActionBarActivity {
 
         currentUserUID = extras.getString(TabMessages.currentUserUID);
         otherUserUID = extras.getString(TabMessages.otherUserUID);
+        otherUserName = extras.getString(TabMessages.otherUserName);
+        getSupportActionBar().setTitle(otherUserName);
         userChatsRef = chatsRef.child(currentUserUID).child(otherUserUID);
         otherUserChatsRef = chatsRef.child(otherUserUID).child(currentUserUID);
         userChatListRef = chatsListRef.child(currentUserUID).child(otherUserUID);
         otherUserChatListRef = chatsListRef.child(otherUserUID).child(currentUserUID);
 
         final ListView listView = (ListView) findViewById(R.id.chat_message_listView);
-        final CustomFirebaseListAdapter adapter = new CustomFirebaseListAdapter(userChatsRef.limit(20), R.layout.chat_message_other, this, currentUserUID, otherUserUID);
+        final ChatMessageAdapter adapter = new ChatMessageAdapter(userChatsRef.limit(20), R.layout.chat_message_other, this, currentUserUID, otherUserUID);
 
         listView.setAdapter(adapter);
 

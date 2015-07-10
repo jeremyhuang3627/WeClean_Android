@@ -26,7 +26,7 @@ import app.nevvea.weclean.R;
  *
  * This adapter is used specifically to deal with the chat message list
  */
-public class CustomFirebaseListAdapter extends BaseAdapter{
+public class ChatMessageAdapter extends BaseAdapter{
 
     private String currentUserID;
     private String otherUserID;
@@ -39,7 +39,7 @@ public class CustomFirebaseListAdapter extends BaseAdapter{
     private Map<String, HashMap<String, String>> mModelKeys;
     private HashMap<String, String> model;
 
-    public CustomFirebaseListAdapter(Query mRef, int mLayout, Activity activity, String currentUserID, String otherUserID) {
+    public ChatMessageAdapter(Query mRef, int mLayout, Activity activity, String currentUserID, String otherUserID) {
 
         this.currentUserID = currentUserID;
         this.otherUserID = otherUserID;
@@ -191,7 +191,7 @@ public class CustomFirebaseListAdapter extends BaseAdapter{
 
             textlayoutParams.addRule(RelativeLayout.RIGHT_OF, 0);
             textlayoutParams.addRule(RelativeLayout.LEFT_OF, R.id.chat_message_user_pic);
-            
+
             currentMessage.setLayoutParams(textlayoutParams);
         } else {
             profilePictureView.setProfileId(otherUserID.replaceAll("\\D+", ""));

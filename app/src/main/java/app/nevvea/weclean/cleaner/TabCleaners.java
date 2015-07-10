@@ -1,12 +1,16 @@
 package app.nevvea.weclean.cleaner;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
 
@@ -25,7 +29,11 @@ import app.nevvea.weclean.cleaner.CleanerDetail;
  *
  */
 public class TabCleaners extends Activity {
-    private ArrayList<User> cleanerlist = new ArrayList<>();
+    private AuthData mAuthData;
+    private Firebase cleanersRef = new Firebase("https://dormcatchat.firebaseio.com/cleaners");
+
+    private Context context;
+    private CleanerAdapter cleanerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,18 +41,8 @@ public class TabCleaners extends Activity {
         setContentView(R.layout.tab_cleaners);
 
         final ListView listView = (ListView) findViewById(R.id.listView_cleaners);
-        cleanerlist.add(new User("Anna", 0, R.drawable.pic_anna, "lallalalla"));
-        cleanerlist.add(new User("Anna", 0, R.drawable.pic_anna, "lallalalla"));
-        cleanerlist.add(new User("Anna", 0, R.drawable.pic_anna, "lallalalla"));
-        cleanerlist.add(new User("Anna", 0, R.drawable.pic_anna, "lallalalla"));
-        cleanerlist.add(new User("Anna", 0, R.drawable.pic_anna, "lallalalla"));
-        cleanerlist.add(new User("Anna", 0, R.drawable.pic_anna, "lallalalla"));
-        cleanerlist.add(new User("Anna", 0, R.drawable.pic_anna, "lallalalla"));
-        cleanerlist.add(new User("Anna", 0, R.drawable.pic_anna, "lallalalla"));
-
-        // set adapter to list view of cleaners
-        ListAdapter adapter = new CleanerAdapter(this, cleanerlist);
-        listView.setAdapter(adapter);
+        CleanerAdapter cleanerAdapter = new CleanerAdapter(cleanersRef, R.layout.cell_cleaners, this);
+        listView.setAdapter(cleanerAdapter);
 
         // call cleaner detail activity when a cleaner is clicked
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

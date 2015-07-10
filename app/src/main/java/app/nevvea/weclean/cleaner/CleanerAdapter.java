@@ -1,5 +1,6 @@
 package app.nevvea.weclean.cleaner;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +9,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.login.widget.ProfilePictureView;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.firebase.client.Query;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import app.nevvea.weclean.FirebaseListAdapter;
 import app.nevvea.weclean.R;
 import app.nevvea.weclean.User;
 
@@ -21,67 +27,30 @@ import app.nevvea.weclean.User;
  * Adapter for popping cleaners' list
  *
  */
-public class CleanerAdapter extends BaseAdapter {
+public class CleanerAdapter extends FirebaseListAdapter<Cleaner> {
     private Context context;
-    private ArrayList<User> cleanerslist;
+    private ProfilePictureView cleanerPic;
+    private TextView cleanerName;
+    private TextView cleanerGender;
+    private TextView cleanerDes;
 
     // constructor
-    public CleanerAdapter(Context context, ArrayList<User> cleanerslist) {
-        this.context = context;
-        this.cleanerslist = cleanerslist;
-    }
+    public CleanerAdapter(Query ref, int layout, Activity activity) {
+        super(ref, Cleaner.class, layout, activity);
 
-    /**
-     *
-     * setup view of each cleaner's cell in cleaners' list
-     *
-     * @param position
-     * @param convertView
-     * @param parent
-     * @return
-     */
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View cellView;
-
-        // these four lines look suspiciously useless
-        if (convertView == null)
-            cellView = new View(context);
-        else
-            cellView = convertView;
-
-        // inflate cellView with layout
-        cellView = inflater.inflate(R.layout.cell_cleaners, null);
-
-        // pop cellView with user info
-
-        User user = cleanerslist.get(position);
-
-        TextView userName = (TextView) cellView.findViewById(R.id.cleaner_name);
-        userName.setText(user.getName());
-
-        ImageView userPic = (ImageView) cellView.findViewById(R.id.cleaner_pic);
-        userPic.setImageResource(user.getPicid());
-
-        // TODO: setup user gender pic
-
-        TextView userDescription = (TextView) cellView.findViewById(R.id.cleaner_description);
-        userDescription.setText(user.getDescription());
-
-        return cellView;
     }
 
     @Override
-    public int getCount() { return cleanerslist.size(); }
+    protected void populateView(View v, Cleaner cleaner) {
 
-    @Override
-    public Object getItem(int position) {
-        return cleanerslist.get(position);
+        cleanerPic = (ProfilePictureView) v.findViewById(R.id.cleaner_pic);
+        cleanerName = (TextView) v.findViewById(R.id.cleaner_name);
+        //cleanerGender = (TextView) v.findViewById(R.id.cleaner_gender);
+        cleanerDes = (TextView) v.findViewById(R.id.cleaner_description);
+
+        cleanerPic.setProfileId(cleaner.getUid().replaceAll("\\D+", ""));
+        cleanerName.setText(cleaner.getName());
+        //cleanerGender.setText(cleaner.getGender());
+        cleanerDes.setText(cleaner.getService());
     }
-
-    @Override
-    public long getItemId(int position) { return 0; }
-
 }

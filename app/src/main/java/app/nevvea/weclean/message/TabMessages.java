@@ -21,6 +21,7 @@ import app.nevvea.weclean.R;
 public class TabMessages extends Activity {
     public final static String currentUserUID = "Replace By currentUID";
     public final static String otherUserUID = "Replace By otherUID";
+    public final static String otherUserName = "Replace By name";
 
     private AuthData mAuthData;
     private Firebase mainRef = new Firebase("https://dormcatchat.firebaseio.com/");
@@ -75,6 +76,7 @@ public class TabMessages extends Activity {
                     extras.putString(currentUserUID, firebaseUID);
                     MessageList messageList = (MessageList) mMessageListAdapter.getItem(position);
                     extras.putString(otherUserUID, messageList.getUid());
+                    extras.putString(otherUserName, messageList.getName());
                     intent.putExtras(extras);
                     startActivity(intent);
                 }

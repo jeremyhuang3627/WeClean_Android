@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
     <!-- user profile picture -->
-    <ImageView
+    <com.facebook.login.widget.ProfilePictureView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:id="@+id/cleaner_pic"
-        android:layout_width="80dp"
-        android:layout_height="80dp" />
+        facebook:preset_size="small"
+        android:src="@drawable/pic_anna"/>
 
     <!-- user info-->
     <LinearLayout
